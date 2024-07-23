@@ -2,6 +2,7 @@ import { StyleSheet, View } from 'react-native'
 import {colors} from '../global/colors'
 
 const Card = ({children, style}) => {
+  //cambio prueba
   return (
     <View style={{...styles.container, ...style}}>
       {children}
