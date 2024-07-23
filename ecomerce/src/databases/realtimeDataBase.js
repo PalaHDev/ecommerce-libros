@@ -1,1 +1,0 @@
-export const baseUrl = "https://bakeryapp-ad4a5-default-rtdb.firebaseio.com/";
