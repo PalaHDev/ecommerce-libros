@@ -6,6 +6,7 @@ import Navigator from "./src/navigation/Navigator";
 
 import { Provider } from "react-redux";
 import store from "./src/store";
+import Toast from "react-native-toast-message";
 
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
     <SafeAreaView style={styles.container}>
       <Provider store={store}>
         <Navigator />
+        <Toast />
       </Provider>
     </SafeAreaView>
   );

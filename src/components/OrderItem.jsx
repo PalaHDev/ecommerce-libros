@@ -9,10 +9,10 @@ const OrderItem = ({ order }) => {
   );
 
   return (
-    <View style={styles.card} onPress={() => {}}>
+    <View style={styles.card} onPress={() => { }}>
       <View style={styles.textContainer}>
         <Text style={styles.text}>
-          {new Date(order.createdAt).toLocaleString()}
+          {order.createdAt}
         </Text>
         <Text style={styles.text2}>${total}</Text>
       </View>
