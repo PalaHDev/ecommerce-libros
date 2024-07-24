@@ -1,10 +1,11 @@
-import { Image, Pressable, StyleSheet, Text } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import Card from "./Card";
 import { colors } from "../global/colors";
 
 import { useDispatch } from "react-redux";
 import { setItemSelected } from "../features/Shop/ShopSlice";
+import getImage from "../utils/imageUtils";
 
 const ProductItem = ({
   product,
@@ -24,11 +25,15 @@ const ProductItem = ({
         style={styles.pressable}
         onPress={handleNavigate}
       >
-        <Text style={styles.textCategory}>{product.title}</Text>
+        <View style={styles.contenedorText}>
+          <Text style={styles.textCategory}>{product.title}</Text>
+          <Text style={styles.textautor}>{product.author}</Text>
+          <Text style={styles.textautor}>${product.price}</Text>
+        </View>
         <Image
           resizeMode="cover"
           style={styles.image}
-          source={{ uri: product.images[0] }}
+          source={getImage(product.images[0])}
         />
       </Pressable>
     </Card>
@@ -51,11 +56,18 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     flexDirection: "row",
   },
+  contenedorText:{
+    flexDirection: 'column',
+     maxWidth: '70%' 
+  },
   textCategory: {
     color: colors.skyBlue700,
-    width: '70%',
   },
-  pressable : {
+  textautor: {
+    fontSize:12,
+    color: colors.skyBlue900,
+  },
+  pressable: {
     width: "100%",
     flexDirection: "row",
     justifyContent: 'space-between',

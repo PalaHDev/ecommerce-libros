@@ -8,6 +8,7 @@ import Header from '../components/Header'
 import { colors } from '../global/colors'
 
 import { FontAwesome5 } from "@expo/vector-icons";
+import AuthStackNavigator from './AuthStackNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -58,6 +59,23 @@ const BottomTapNavigator = () => {
               <View>
                 <FontAwesome5
                   name="receipt"
+                  size={24}
+                  color={focused ? "black" : colors.lightGray}
+                />
+              </View>
+            );
+          },
+        }}
+      />
+      <Tab.Screen
+        name="Mi perfil"
+        component={AuthStackNavigator}
+        options={{
+          tabBarIcon: ({ focused }) => {
+            return (
+              <View>
+                <FontAwesome5
+                  name="user-alt"
                   size={24}
                   color={focused ? "black" : colors.lightGray}
                 />

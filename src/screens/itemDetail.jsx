@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useGetProductByIdQuery } from "../services/shopServices";
 import Toast from "react-native-toast-message";
 import { addCartItem } from "../features/Cart/CartSlice";
+import getImage from "../utils/imageUtils";
 
 const ItemDetail = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
@@ -56,11 +57,11 @@ const ItemDetail = ({ route, navigation }) => {
           }
         >
           <Image
-            source={{ uri: product.images[0] }}
+             source={getImage(product.images[0])} 
             style={
               orientation === "portrait" ? styles.image : styles.imageLandscape
             }
-            resizeMode="cover"
+            resizeMode="contain"
           />
           <View
             style={
