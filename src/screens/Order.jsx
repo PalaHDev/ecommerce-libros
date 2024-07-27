@@ -6,7 +6,8 @@ import { useEffect } from 'react';
 
 const Order = () => {
   const { items } = useSelector((state) => state.cart.value);
-  const { data: OrderData, isLoading, refetch } = useGetOrdersByUserQuery('prueba@gmail.com');
+  const { user } = useSelector((state) => state.auth.value);
+  const { data: OrderData, isLoading, refetch } = useGetOrdersByUserQuery(user);
   useEffect(() => {
     if (items.length === 0) {
       refetch();

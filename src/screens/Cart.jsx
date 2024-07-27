@@ -11,6 +11,7 @@ import NoSearchResultComponent from '../components/NoSearchResultComponent';
 
 
 const Cart = () => {
+  const { user } = useSelector((state) => state.auth.value);
   const { items: CartData, total, updatedAt } = useSelector((state) => state.cart.value)
   const dispatch = useDispatch();
   const [triggerPostOrder, result] = usePostOrderMutation()
@@ -18,7 +19,7 @@ const Cart = () => {
   const onConfirmarOrden = () => {
     // logica de confirmacion de orden
     console.log(CartData, 'CartData::::::');
-    triggerPostOrder({ items: CartData, user: 'prueba@gmail.com', total, createdAt: updatedAt })
+    triggerPostOrder({ items: CartData, user, total, createdAt: updatedAt })
   }
   useEffect(() => {
     if (result.isSuccess) {

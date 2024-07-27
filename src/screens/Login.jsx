@@ -1,10 +1,15 @@
-
-import { View, Text, TextInput, Button, Image, StyleSheet, TouchableOpacity, ActivityIndicator, Linking } from "react-native";
-import React, { useState } from 'react';
+import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useEffect, useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../utils/validationSchemas";
 import { colors } from "../global/colors";
+import ThemedButton from '../components/ThemedButton';
+import ThemedInput from "../components/ThemedInput";
+import { useDispatch } from "react-redux";
+import { useSignInMutation } from "../services/authService";
+import { insertSession } from "../persistence";
+import { setUser } from "../features/User/UserSlice";
 
 const Login = ({ navigation }) => {
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
@@ -12,9 +17,34 @@ const Login = ({ navigation }) => {
     });
     const [loading, setLoading] = useState(false);
     const password = watch("password");
+    const dispatch = useDispatch();
+    const [triggerSignIn, result] = useSignInMutation();
+
+    useEffect(() => {
+        if (result?.data && result.isSuccess) {
+            insertSession({
+                email: result.data.email,
+                localId: result.data.localId,
+                token: result.data.idToken
+            }).then((response) => {
+                console.log(response)
+                dispatch(
+                    setUser({
+                        email: result.data.email,
+                        idToken: result.data.idToken,
+                        localId: result.data.localId,
+                    })
+                );
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    }, [result])
 
     const onSubmit = (formData) => {
         console.log('Formulario enviado:', formData);
+        const { email, password } = formData;
+        triggerSignIn({ email, password, returnSecureToken: true })
     };
 
     return (
@@ -28,58 +58,40 @@ const Login = ({ navigation }) => {
                     />
                 </View>
 
-                <View style={styles.inputContainer}>
-                    <Controller
-                        control={control}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <View style={styles.inputWrapper}>
-                                <Text style={styles.label}>Correo electrónico</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    keyboardType="email-address"
-                                    autoCapitalize="none"
-                                />
-                                {errors.email && <Text style={styles.errorText}>{errors.email.message}</Text>}
-                            </View>
-                        )}
-                        name="email"
-                    />
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <ThemedInput
+                            label="Correo electrónico"
+                            value={value}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            keyboardType="email-address"
+                            error={errors.email?.message}
+                        />
+                    )}
+                    name="email"
+                />
+
+                <Controller
+                    control={control}
+                    render={({ field: { onChange, onBlur, value } }) => (
+                        <ThemedInput
+                            label="Contraseña"
+                            value={value}
+                            onBlur={onBlur}
+                            onChange={onChange}
+                            secureTextEntry={true}
+                            error={errors.password?.message}
+                        />
+                    )}
+                    name="password"
+                />
+
+                <View style={styles.buttonContainer}>
+                    <ThemedButton title="Entrar" onPress={handleSubmit(onSubmit)} />
                 </View>
 
-                <View style={styles.inputContainer}>
-                    <Controller
-                        control={control}
-                        render={({ field: { onChange, onBlur, value } }) => (
-                            <View style={styles.inputWrapper}>
-                                <Text style={styles.label}>Contraseña</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    onBlur={onBlur}
-                                    onChangeText={onChange}
-                                    value={value}
-                                    secureTextEntry={true}
-                                    textContentType="none"
-                                    autoComplete="off"
-                                    autoCorrect={false}
-                                    spellCheck={false}
-                                    keyboardType="default"
-                                    importantForAutofill="no"
-                                    disableFullscreenUI={true}
-                                />
-                                {errors.password && <Text style={styles.errorText}>{errors.password.message}</Text>}
-
-                            </View>
-                        )}
-                        name="password"
-                    />
-                </View>
-
-
-
-                <Button title="Entrar" onPress={handleSubmit(onSubmit)} color={colors.skyBlue900} />
             </View>
 
             <View style={styles.footer}>
@@ -101,40 +113,12 @@ const styles = StyleSheet.create({
         padding: 16,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor:colors.gray
+        borderColor: colors.gray
     },
     imageContainer: {
         justifyContent: 'center',
         alignItems: 'center',
         marginBottom: 24,
-    },
-    inputContainer: {
-        marginBottom: 16,
-    },
-    inputWrapper: {
-        position: 'relative',
-    },
-    label: {
-        marginBottom: 8,
-        fontSize: 16,
-        color: colors.black,
-    },
-    input: {
-        height: 40,
-        borderWidth: 1,
-        borderRadius: 4,
-        borderColor: colors.gray,
-        paddingLeft: 8,
-        paddingRight: 40,
-    },
-    errorText: {
-        marginTop: 8,
-        color: colors.red,
-    },
-    loaderContainer: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
     },
     footer: {
         marginTop: 40,
@@ -144,4 +128,8 @@ const styles = StyleSheet.create({
         color: colors.blue,
         fontSize: 16,
     },
-})
+    buttonContainer: {
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+});

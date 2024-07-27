@@ -8,7 +8,7 @@ import Header from '../components/Header'
 import { colors } from '../global/colors'
 
 import { FontAwesome5 } from "@expo/vector-icons";
-import AuthStackNavigator from './AuthStackNavigator'
+import MyProfileStackNavigator from './MyProfileStackNavigator'
 
 const Tab = createBottomTabNavigator()
 
@@ -69,7 +69,7 @@ const BottomTapNavigator = () => {
       />
       <Tab.Screen
         name="Mi perfil"
-        component={AuthStackNavigator}
+        component={MyProfileStackNavigator}
         options={{
           tabBarIcon: ({ focused }) => {
             return (

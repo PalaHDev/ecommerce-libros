@@ -1,8 +1,20 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { Pressable, StyleSheet, Text, View } from 'react-native'
 import { Entypo } from "@expo/vector-icons";
 import { colors } from '../global/colors';
+import { useDispatch } from 'react-redux';
+import { removeCartItem } from '../features/Cart/CartSlice';
+import Toast from 'react-native-toast-message';
 
 const CartItem = ({cartItem}) => {
+  const dispatch = useDispatch();
+  const handleRemoveCart = () => {
+    dispatch(removeCartItem({ ...cartItem }));
+    Toast.show({
+      type: 'info',
+      text1: 'Se ha eliminado del carrito!',
+      position: 'bottom'
+    });
+  }
   return (
     <View style={styles.card}>
       <View style={styles.textContainer}>
@@ -12,7 +24,9 @@ const CartItem = ({cartItem}) => {
         <Text>{cartItem.brand}</Text>
         <Text>{cartItem.price}</Text>
       </View>
-    <Entypo name="trash" size={30} color="black" />
+      <Pressable onPress={handleRemoveCart}>
+        <Entypo name="trash" size={30} color="black" />
+      </Pressable>
     </View>
   );
 }
