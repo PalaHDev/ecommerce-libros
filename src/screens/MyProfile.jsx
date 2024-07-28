@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
-import { colors } from '../global/colors'
+import { StyleSheet, View, Image } from 'react-native'
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileimageQuery } from '../services/shopServices'
 import { clearUser } from '../features/User/UserSlice';
@@ -15,7 +14,6 @@ const MyProfile = ({navigation}) => {
       const launchCamera = async () => {
         navigation.navigate("Image Selector");
       };
-
       const defaultImageRoute = "../../assets/user.png";
 
       const signOut = async () => {
@@ -71,13 +69,4 @@ const styles = StyleSheet.create({
     width: 200,
     borderRadius: 100
   },
-  btn: {
-    marginTop: 10,
-    backgroundColor: colors.green700,
-    width: "80%",
-    justifyContent: 'center',
-    alignItems: 'center',
-    paddingVertical: 7,
-    borderRadius: 5
-  }
 })

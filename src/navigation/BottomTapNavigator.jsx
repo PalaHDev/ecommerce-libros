@@ -71,6 +71,7 @@ const BottomTapNavigator = () => {
         name="Mi perfil"
         component={MyProfileStackNavigator}
         options={{
+          headerShown:false,
           tabBarIcon: ({ focused }) => {
             return (
               <View>
