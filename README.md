@@ -61,6 +61,33 @@ Este proyecto utiliza las siguientes dependencias:
 - expo-image-picker: "~15.0.6"
 - expo-file-system: "~17.0.1"
 
+## Librerías Utilizadas
+Este proyecto de e-commerce de libros utiliza las siguientes librerías:
+
+- **@expo/metro-runtime**: Proporciona funciones de tiempo de ejecución para aplicaciones Expo.
+- **@hookform/resolvers**: Integración de validadores de esquema (como Yup) con React Hook Form.
+- **@react-navigation/bottom-tabs**: Crea una navegación de pestañas en la parte inferior de la pantalla.
+- **@react-navigation/native**: Navegación principal para aplicaciones React Native.
+- **@react-navigation/native-stack**: Proporciona una pila de navegación para gestionar la navegación entre pantallas.
+- **@reduxjs/toolkit**: Herramientas oficiales de Redux para una configuración y escritura de código Redux más sencilla y eficiente.
+- **expo**: Marco para construir aplicaciones móviles con React Native.
+- **expo-font**: Maneja las fuentes personalizadas en aplicaciones Expo.
+- **expo-splash-screen**: Controla la pantalla de carga mientras se inicializa la aplicación.
+- **expo-status-bar**: Proporciona una barra de estado personalizable para aplicaciones Expo.
+- **react**: Biblioteca para construir interfaces de usuario.
+- **react-dom**: Paquete que proporciona DOM específico para React.
+- **react-hook-form**: Biblioteca para gestionar formularios en aplicaciones React.
+- **react-native**: Framework para construir aplicaciones móviles nativas utilizando React.
+- **react-native-safe-area-context**: Proporciona un contexto para gestionar las áreas seguras de la pantalla.
+- **react-native-screens**: Mejora el rendimiento de la navegación en React Native.
+- **react-native-toast-message**: Biblioteca para mostrar mensajes tipo "toast" en aplicaciones React Native.
+- **react-native-web**: Proporciona componentes de React Native para aplicaciones web.
+- **react-redux**: Enlaces oficiales de React para Redux.
+- **yup**: Validador de esquemas para valores de JavaScript.
+- **expo-sqlite**: Proporciona una API para utilizar una base de datos SQLite en aplicaciones Expo.
+- **expo-image-picker**: Permite seleccionar imágenes de la biblioteca del dispositivo o tomar fotos con la cámara.
+- **expo-file-system**: Acceso al sistema de archivos del dispositivo.
+
 ## 📁 Acceso al proyecto
 ```plaintext
 git clone https://github.com/PalaHDev/ecommerce-libros.git
