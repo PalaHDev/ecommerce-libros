@@ -7,14 +7,13 @@ export const initSQLiteDB = () => {
     const promise = new Promise((resolve, reject)=>{
         db.transaction((tx)=> {
             tx.executeSql(
-              "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL);",
+              "CREATE TABLE IF NOT EXISTS sessions (localId TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, token TEXT NOT NULL)",
               [], // Parametros
               (_, result) => resolve(result),
               (_, error) => reject(error)
             );
         });
     });
-    console.log("retorna la promesa")
     return promise
 }
 // crear la session
@@ -29,7 +28,6 @@ export const insertSession = ({email, localId, token})=>{
         );
       });
     });
-    console.log("Insertando registro promesa");
     return promise;
 }
 
@@ -46,7 +44,6 @@ export const getSession = () => {
         );
       });
     });
-    console.log("Obteniendo la session");
     return promise;
 }
 
@@ -62,6 +59,6 @@ export const truncateSessionTable = () => {
         );
       });
     });
-    console.log("Borrando la session");
+   
     return promise;
 }

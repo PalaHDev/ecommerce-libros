@@ -13,10 +13,6 @@ const Counter = () => {
   const dispatch = useDispatch()
 
   const [inputToAdd, setInputToAdd] = useState(null);
-  
-  //let count = 0
-
-  console.log(count);
 
   return (
     <View style={styles.container}>

@@ -13,9 +13,7 @@ const Order = () => {
       refetch();
     }
   }, [items]);
-  if(!isLoading){
-    console.log(OrderData,'OrderData:::::')
-  }
+ 
   return (
     <View>
       <FlatList

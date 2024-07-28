@@ -33,7 +33,6 @@ const SignUp = ({ navigation }) => {
     }, [result])
 
     const onSubmit = (formData) => {
-        console.log('Formulario enviado:', formData);
         const { email, password } = formData;
         triggerSignUp({ email, password, returnSecureToken: true })
     };

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setCameraImage } from '../features/User/UserSlice';
 import { useGetProfileimageQuery, usePostProfileImageMutation } from '../services/shopServices';
 import ThemedButton from '../components/ThemedButton';
+import Toast from 'react-native-toast-message';
 
 const ImageSelector = ({navigation}) => {
   const [image, setImage] = useState(null);
@@ -30,15 +31,17 @@ const ImageSelector = ({navigation}) => {
                     quality: 0.2,
                 })
 
-                console.log(result);
-
                 if (!result.canceled){
                     const image = `data:image/jpeg;base64,${result.assets[0].base64}`
                     setImage(image)
                 }
             }
         } catch (error) {
-            console.log(error)
+          Toast.show({
+            type: 'error',
+            text1: 'ha ocurrido un error inesperado',
+            position: 'bottom'
+          });
         }
     }
 
@@ -79,8 +82,11 @@ const ImageSelector = ({navigation}) => {
       triggerPostImage({ image, localId });
       navigation.goBack();
     } catch (error) {
-      console.log('error');
-      console.log(error);
+      Toast.show({
+        type: 'error',
+        text1: 'ha ocurrido un error inesperado',
+        position: 'bottom'
+      });
     }
   };
 

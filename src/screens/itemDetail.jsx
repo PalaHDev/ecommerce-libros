@@ -16,25 +16,16 @@ import getImage from "../utils/imageUtils";
 const ItemDetail = ({ route, navigation }) => {
   const { width, height } = useWindowDimensions();
   const [orientation, setOrientation] = useState("portrait");
-  //const [product, setProduct] = useState(null);
   const { productoId: idSelected } = route.params;
   const dispatch = useDispatch()
   const { data: product, error, isLoading } = useGetProductByIdQuery(idSelected);
-
-  console.log("width: " + width);
-  console.log("heigth: " + height);
-
-  // Landscape: Horisontal
+  // Landscape: Horizontal
   // Portraint: Vertical
 
   useEffect(() => {
     if (width > height) setOrientation("landscape");
     else setOrientation("portrait");
   }, [width, height]);
-
-  useEffect(() => {
-    console.log(product, 'product');
-  }, [product]);
 
   const handleAgregarAlCarrito = () => {
     dispatch(addCartItem({ ...product, quantity: 1 }));

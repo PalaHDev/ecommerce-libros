@@ -24,6 +24,7 @@ export const shopApi = createApi({
                 if (transformedResponse.length) return transformedResponse[0];
             },
         }),
+        
         postOrder: builder.mutation({
             query: ({ ...order }) => ({
                 url: "orders.json",
@@ -34,7 +35,6 @@ export const shopApi = createApi({
         getOrdersByUser: builder.query({
             query: (user) => `orders.json?orderBy="user"&equalTo="${user}"`,
             transformResponse: (res) => {
-                console.log(res, 'resp::::::::');
                 if (!res) return [];
                 const transformedResponse = Object.entries(res).map(([id, order]) => ({
                     id,

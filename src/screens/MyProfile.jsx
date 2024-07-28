@@ -1,13 +1,11 @@
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native'
 import { colors } from '../global/colors'
-
 import { useDispatch, useSelector } from "react-redux";
 import { useGetProfileimageQuery } from '../services/shopServices'
 import { clearUser } from '../features/User/UserSlice';
 import { truncateSessionTable } from '../persistence';
 import ThemedButton from '../components/ThemedButton';
-
-
+import Toast from 'react-native-toast-message';
 
 const MyProfile = ({navigation}) => {
 
@@ -23,10 +21,13 @@ const MyProfile = ({navigation}) => {
       const signOut = async () => {
         try {
           const response = await truncateSessionTable()
-          console.log(response)
           dispatch(clearUser())
         } catch (error) {
-          console.log({errorSignOutDB: error})
+          Toast.show({
+            type: 'error',
+            text1: 'ha ocurrido un error inesperado',
+            position: 'bottom'
+          });
         }
       }
 

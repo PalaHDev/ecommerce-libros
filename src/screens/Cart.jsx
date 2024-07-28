@@ -18,7 +18,6 @@ const Cart = () => {
   const navigation = useNavigation();
   const onConfirmarOrden = () => {
     // logica de confirmacion de orden
-    console.log(CartData, 'CartData::::::');
     triggerPostOrder({ items: CartData, user, total, createdAt: updatedAt })
   }
   useEffect(() => {
@@ -27,8 +26,7 @@ const Cart = () => {
       dispatch(clearCart());
       Toast.show({
         type: 'success',
-        text1: 'Confirmación',
-        text2: 'Se ha generado la orden correctamente!',
+        text1: 'Se ha generado la orden correctamente!',
         position: 'bottom'
       });
       navigation.navigate('Ordenes', { screen: 'OrderScreen' });

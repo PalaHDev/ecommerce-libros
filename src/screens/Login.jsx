@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import { useSignInMutation } from "../services/authService";
 import { insertSession } from "../persistence";
 import { setUser } from "../features/User/UserSlice";
+import Toast from "react-native-toast-message";
 
 const Login = ({ navigation }) => {
     const { control, handleSubmit, watch, formState: { errors } } = useForm({
@@ -19,15 +20,14 @@ const Login = ({ navigation }) => {
     const password = watch("password");
     const dispatch = useDispatch();
     const [triggerSignIn, result] = useSignInMutation();
-
     useEffect(() => {
+       
         if (result?.data && result.isSuccess) {
             insertSession({
                 email: result.data.email,
                 localId: result.data.localId,
                 token: result.data.idToken
             }).then((response) => {
-                console.log(response)
                 dispatch(
                     setUser({
                         email: result.data.email,
@@ -36,13 +36,22 @@ const Login = ({ navigation }) => {
                     })
                 );
             }).catch(err => {
-                console.log(err)
+                Toast.show({
+                    type: 'error',
+                    text1: 'ha ocurrido un error inesperado',
+                    position: 'bottom'
+                  });
             })
+        }else if(!result.isLoading && !result.isSuccess && result.isError){
+            Toast.show({
+                type: 'error',
+                text1: 'ha ocurrido un error inesperado, intente inscribirse',
+                position: 'bottom'
+              });
         }
     }, [result])
 
     const onSubmit = (formData) => {
-        console.log('Formulario enviado:', formData);
         const { email, password } = formData;
         triggerSignIn({ email, password, returnSecureToken: true })
     };

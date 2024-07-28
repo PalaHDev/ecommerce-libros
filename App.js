@@ -9,19 +9,22 @@ import store from "./src/store";
 
 import { initSQLiteDB } from "./src/persistence"; 
 import Toast from 'react-native-toast-message';
-(async ()=> {
-  try {
-    const response = await initSQLiteDB()
-    //console.log(response)
-    console.log({responseCreatingDB: response})
-    console.log("DB Inicilized")
-  } catch (error) {
-    console.log({errorCreatingDB: error})
-  }
-})()
-
+import { useEffect } from "react";
 
 export default function App() {
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await initSQLiteDB();
+      } catch (error) {
+        Toast.show({
+          type: 'error',
+          text1: 'Ha ocurrido un error inesperado',
+          position: 'bottom'
+        });
+      }
+    })();
+  }, []);
 
   const [fontsLoaded, fontError] = useFonts({
     Josefin: require("./assets/JosefinSans-Regular.ttf"),
@@ -32,6 +35,7 @@ export default function App() {
   }
 
   return (
+    
     <SafeAreaView style={styles.container}>
       <Provider store={store}>
         <Navigator />
